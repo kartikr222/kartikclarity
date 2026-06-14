@@ -1,0 +1,186 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html { scroll-behavior: smooth; background: #000; }
+  body {
+    @apply bg-black text-white antialiased;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+  ::selection { background: rgba(212,175,55,0.22); color: #fff; }
+}
+
+@layer components {
+  /* Glass morphism */
+  .glass {
+    background: rgba(255,255,255,0.025);
+    backdrop-filter: blur(20px) saturate(1.2);
+    border: 1px solid rgba(255,255,255,0.07);
+  }
+  .glass-gold {
+    background: rgba(212,175,55,0.04);
+    border: 1px solid rgba(212,175,55,0.14);
+  }
+  .glass-hover:hover {
+    border-color: rgba(212,175,55,0.22);
+    background: rgba(255,255,255,0.035);
+  }
+
+  /* Gold gradient text */
+  .text-gold {
+    background: linear-gradient(135deg, #e6c658 0%, #d4af37 55%, #b8960f 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Primary CTA */
+  .cta-btn {
+    @apply inline-flex items-center gap-3 font-semibold tracking-wider uppercase text-sm;
+    background: linear-gradient(135deg, #e6c658, #d4af37, #b8960f);
+    background-size: 200% 200%;
+    color: #000;
+    padding: 15px 34px;
+    border-radius: 8px;
+    animation: btnShift 4s ease infinite;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    letter-spacing: 0.07em;
+  }
+  .cta-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 44px rgba(212,175,55,0.22);
+  }
+  @keyframes btnShift {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  /* Ghost / outline button */
+  .ghost-btn {
+    @apply inline-flex items-center gap-2.5 text-sm font-medium;
+    border: 1px solid rgba(255,255,255,0.10);
+    color: rgba(255,255,255,0.55);
+    padding: 14px 28px;
+    border-radius: 8px;
+    letter-spacing: 0.03em;
+    transition: border-color 0.25s, color 0.25s, background 0.25s;
+  }
+  .ghost-btn:hover {
+    border-color: rgba(255,255,255,0.22);
+    color: rgba(255,255,255,0.9);
+    background: rgba(255,255,255,0.03);
+  }
+
+  /* Nav outline button */
+  .outline-btn {
+    @apply inline-flex items-center gap-2 text-sm font-medium;
+    border: 1px solid rgba(255,255,255,0.10);
+    color: rgba(255,255,255,0.6);
+    padding: 9px 20px;
+    border-radius: 7px;
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
+  }
+  .outline-btn:hover {
+    border-color: rgba(212,175,55,0.35);
+    color: #fff;
+    background: rgba(212,175,55,0.04);
+  }
+
+  /* ─── Scroll reveal — calm, 20px not 36px ─── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition:
+      opacity  0.9s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .reveal.visible       { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1       { transition-delay: 0.08s; }
+  .reveal-delay-2       { transition-delay: 0.16s; }
+  .reveal-delay-3       { transition-delay: 0.24s; }
+  .reveal-delay-4       { transition-delay: 0.32s; }
+
+  /* ─── Loading — pulse glow ─── */
+  .logo-pulse-glow {
+    border-radius: 50%;
+    animation: logoPulse 3s ease-in-out infinite;
+  }
+  @keyframes logoPulse {
+    0%, 100% { box-shadow: 0 0 30px 10px rgba(212,175,55,0.12); }
+    50%       { box-shadow: 0 0 70px 28px rgba(212,175,55,0.26); }
+  }
+
+  /* Diagnosing animated dots */
+  .diagnosing-dots::after {
+    content: '';
+    animation: dots 2s steps(4, end) infinite;
+  }
+  @keyframes dots {
+    0%   { content: ''; }
+    25%  { content: '.'; }
+    50%  { content: '..'; }
+    75%  { content: '...'; }
+    100% { content: ''; }
+  }
+
+  /* Loading progress bar */
+  .loading-bar {
+    animation: loadBar 2.4s cubic-bezier(0.4, 0, 0.2, 1) 0.4s forwards;
+    width: 0%;
+  }
+  @keyframes loadBar {
+    0%   { width: 0%; }
+    100% { width: 100%; }
+  }
+
+  /* Scan line — slower, calmer */
+  .scan-line {
+    position: absolute;
+    left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(212,175,55,0.5), transparent);
+    animation: scanLine 2.8s ease-in-out infinite;
+  }
+  @keyframes scanLine {
+    0%   { top: 0%;   opacity: 0; }
+    8%   { opacity: 0.7; }
+    92%  { opacity: 0.7; }
+    100% { top: 100%; opacity: 0; }
+  }
+
+  /* Leak pulse — subtle red glow, not loud */
+  .leak-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: #ef4444;
+    animation: leakGlow 2.2s ease-in-out infinite;
+  }
+  @keyframes leakGlow {
+    0%, 100% {
+      box-shadow: 0 0 0 0 rgba(239,68,68,0.0), 0 0 6px 2px rgba(239,68,68,0.3);
+    }
+    50% {
+      box-shadow: 0 0 0 5px rgba(239,68,68,0.0), 0 0 14px 6px rgba(239,68,68,0.5);
+    }
+  }
+
+  /* Eyebrow label */
+  .eyebrow {
+    @apply text-xs uppercase tracking-[0.25em] text-gold-400;
+  }
+
+  /* Thin divider */
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.07), transparent);
+  }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar        { width: 5px; }
+::-webkit-scrollbar-track  { background: #000; }
+::-webkit-scrollbar-thumb  { background: #1e1e1e; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #2e2e2e; }
